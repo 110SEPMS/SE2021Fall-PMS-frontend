@@ -13,6 +13,8 @@ export default class AuthModule {
     private trelloKey = "";
     @State()
     private trelloToken = "";
+    @State()
+    private githubToken = "";
 
     @Mutation()
     private setToken(token: string | null) {
@@ -34,6 +36,11 @@ export default class AuthModule {
     private setTrelloToken(token: string) {
         this.trelloToken = token
     }
+    @Mutation()
+    private setGithubToken(githubToken: string) {
+        this.githubToken = githubToken
+    }
+
 
     @Getter()
     public get isAuthenticated() {
@@ -59,6 +66,10 @@ export default class AuthModule {
     public get getTrelloToken() {
         return this.trelloToken;
     }
+    @Getter()
+    public get getGithubToken() {
+        return this.githubToken;
+    }
 
     @Action()
     public updateTrelloKey(key : string) {
@@ -68,10 +79,15 @@ export default class AuthModule {
     public updateTrelloToken(token : string) {
         this.setTrelloToken(token);
     }
+    @Action()
+    public updateGithubToken(githubToken: string) {
+        this.setGithubToken(githubToken);
+    }
 
     @Action()
     public async login(githubCode: string) {
         authenticateGithubToken(githubCode).then((res) => {
+
             this.handleLoginResponse(res);
             router.push("/project");
         }).catch((err) => {
@@ -105,5 +121,6 @@ export default class AuthModule {
         this.setToken(res.data.token);
         this.setAuthority(res.data.authority);
         this.setUserAccount(res.data.userAccount);
+        this.setGithubToken(res.data.githubToken)
     }
 }

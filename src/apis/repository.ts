@@ -18,7 +18,9 @@ export const addRepo: any = (projectId: number, url: string, isSonarqube: boolea
       isSonarqube: isSonarqube,
       sonarqubeUrl: sonarqubeUrl,
       accountColonPw: accountColonPw,
-      projectKey: projectKey
+      projectKey: projectKey,
+      accessToken: store.auth.getGithubToken
+
     },
     {
       headers: {

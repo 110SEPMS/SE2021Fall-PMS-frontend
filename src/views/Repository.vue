@@ -111,7 +111,7 @@
 import Vue from "vue";
 import router from "@/router";
 import { editProject, getProject, getProjectMember } from "@/apis/projects";
-import { addRepo, getRepository, deleteRepo } from "@/apis/repository.ts";
+import { addRepo, getRepository, deleteRepo } from "@/apis/repository";
 import { getUserInfo, isCurrentUserProjectOwner } from "@/apis/user";
 import UserInfo from "@/components/UserInfo.vue";
 import NewItem from "@/components/NewItem.vue";
