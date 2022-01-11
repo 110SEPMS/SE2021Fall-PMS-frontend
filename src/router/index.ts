@@ -6,6 +6,7 @@ import Project from "@/views/Project.vue"
 import Repository from "@/views/Repository.vue"
 import GithubAuthorize from "@/components/GithubAuthorize.vue"
 import RepoInfo from '@/views/RepoInfo.vue'
+import Trello from '@/views/Trello.vue'
 import NotFound from '@/views/NotFound.vue'
 import store from '@/store';
 import Manage from '@/views/Manage.vue'
@@ -68,6 +69,11 @@ const routes: Array<RouteConfig> = [
         next({ name: "Login" });
       }
     }
+  },
+  {
+    path: "/trello",
+    name: "Trello",
+    component: Trello
   }
 ];
 

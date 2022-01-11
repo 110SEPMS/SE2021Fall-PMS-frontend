@@ -54,7 +54,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { getNotification, ReplyToInvitation } from "@/apis/notification.ts";
+import { getNotification, ReplyToInvitation } from "@/apis/notification";
 import * as signalR from "@aspnet/signalr";
 import { host } from "../config/config";
 import store from "@/store";

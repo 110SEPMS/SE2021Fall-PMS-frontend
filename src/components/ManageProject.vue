@@ -83,7 +83,7 @@ import {
   getProjects,
   editProjectNameByAdmin,
   deleteProjectByAdmin,
-} from "@/apis/projects.ts";
+} from "@/apis/projects";
 
 export default Vue.extend({
   props: ["projects"],

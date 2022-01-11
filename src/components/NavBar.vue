@@ -1,8 +1,11 @@
 <template>
   <v-app-bar dense dark>
-    <v-toolbar-title><router-link to="/project" class="routercolor">PMS</router-link></v-toolbar-title>
+    <v-toolbar-title>
+      <router-link to="/project" class="routercolor">PMS-Home</router-link>
+    </v-toolbar-title>
     <v-spacer></v-spacer>
     <Notification v-if="isAuth"/>
+    <TrelloSetting v-if="isAuth"/>
     <v-btn @click="logout" v-if="isAuth">
       <v-icon>mdi-logout</v-icon>
       Logout
@@ -14,10 +17,16 @@
 import store from "@/store";
 import Vue from "vue";
 import Notification from "@/components/Notification.vue"
+import TrelloSetting from "@/components/TrelloSetting.vue"
 
 export default Vue.extend({
+  data: () => {
+    return {
+    };
+  },
   components: {
-    Notification
+    Notification,
+    TrelloSetting,
   },
   computed:{
       isAuth(){
@@ -27,7 +36,8 @@ export default Vue.extend({
   methods: {
     logout: () => {
       store.auth.logout();
-    }
+    },
+    
   },
 });
 </script>

@@ -10,6 +10,7 @@
         />
       </v-col>
       <!-- 左邊個人資訊 end -->
+
       <!-- 右邊表格 -->
       <v-col lg="6">
         <v-row>
@@ -27,6 +28,7 @@
               @add="addproject($event)"
             />
           </v-col>
+          <v-btn @click="foo"></v-btn>
         </v-row>
         <v-divider></v-divider>
         <v-row>
@@ -49,13 +51,14 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { addProject, getProjects, deleteProject } from "@/apis/projects.ts";
+import { addProject, getProjects, deleteProject } from "@/apis/projects";
 import UserInfo from "@/components/UserInfo.vue";
 import DataTable from "@/components/DataTable.vue";
 import NewItem from "@/components/NewItem.vue";
 import TableSearch from "@/components/TableSearch.vue";
 import { getUserInfo, editUserName } from "@/apis/user"
 import bus from '@/store/modules/bus'
+import axios, { AxiosResponse } from "axios"
 
 export default Vue.extend({
   components: {
@@ -73,12 +76,15 @@ export default Vue.extend({
       snackBar: false,
       snackBarTimeout: 3000,
       snackBarColor: "",
-      user: {type: Object, id: '', name: '', avatarUrl: ''}
+      user: {type: Object, id: '', name: '', avatarUrl: ''},
+      boards : {type: Object, ids: [] as Array<string>, names: [] as Array<string>},
     };
   },
   async created(){
     this.updateProject()
     this.user = (await getUserInfo())["data"];
+    this.getBoards();
+    
     bus.on('updateProject', this.updateProject)
   },
   methods: {
@@ -120,6 +126,29 @@ export default Vue.extend({
 
       this.projects = (await getProjects(this.user.id))["data"];
     },
+    async getBoards() {
+            const key = "86643e91263348c08ae0c6c980c1d39e"
+            const token = "bdcc65e53a6b90e91a47c2094efcc8cd94297fd8177f3ae17f00e86e6e51044a"
+            axios.get(`https://api.trello.com/1/members/me/?key=${key}&token=${token}`)
+            .then((response) => {
+                const idBoards = response.data.idBoards;
+                idBoards.forEach((id : string) => {
+                    axios.get(`https://api.trello.com/1/board/${id}/?key=${key}&token=${token}`)
+                    .then((response) => {
+                      this.boards.ids.push(id)
+                      this.boards.names.push(response.data.name)
+                    })
+                    
+                    
+                })
+                
+            })
+            
+        },
+        foo(){
+          window.alert(this.boards.ids); window.alert(this.boards.names)
+        }
+    
   },
 });
 </script>

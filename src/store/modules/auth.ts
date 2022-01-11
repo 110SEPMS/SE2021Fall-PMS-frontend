@@ -9,6 +9,10 @@ export default class AuthModule {
     private authority: string | null = null;
     @State()
     private userAccount: string | null = null;
+    @State()
+    private trelloKey = "";
+    @State()
+    private trelloToken = "";
 
     @Mutation()
     private setToken(token: string | null) {
@@ -21,6 +25,14 @@ export default class AuthModule {
     @Mutation()
     private setUserAccount(account: string | null) {
         this.userAccount = account
+    }
+    @Mutation()
+    private setTrelloKey(key: string) {
+        this.trelloKey = key
+    }
+    @Mutation()
+    private setTrelloToken(token: string) {
+        this.trelloToken = token
     }
 
     @Getter()
@@ -38,6 +50,23 @@ export default class AuthModule {
     @Getter()
     public get getUserAccount() {
         return this.userAccount;
+    }
+    @Getter()
+    public get getTrelloKey() {
+        return this.trelloKey;
+    }
+    @Getter()
+    public get getTrelloToken() {
+        return this.trelloToken;
+    }
+
+    @Action()
+    public updateTrelloKey(key : string) {
+        this.setTrelloKey(key);
+    }
+    @Action()
+    public updateTrelloToken(token : string) {
+        this.setTrelloToken(token);
     }
 
     @Action()
