@@ -28,7 +28,6 @@
               @add="addproject($event)"
             />
           </v-col>
-          <v-btn @click="foo"></v-btn>
         </v-row>
         <v-divider></v-divider>
         <v-row>
@@ -77,13 +76,11 @@ export default Vue.extend({
       snackBarTimeout: 3000,
       snackBarColor: "",
       user: {type: Object, id: '', name: '', avatarUrl: ''},
-      boards : {type: Object, ids: [] as Array<string>, names: [] as Array<string>},
     };
   },
   async created(){
     this.updateProject()
     this.user = (await getUserInfo())["data"];
-    this.getBoards();
     
     bus.on('updateProject', this.updateProject)
   },
@@ -126,29 +123,6 @@ export default Vue.extend({
 
       this.projects = (await getProjects(this.user.id))["data"];
     },
-    async getBoards() {
-            const key = "86643e91263348c08ae0c6c980c1d39e"
-            const token = "bdcc65e53a6b90e91a47c2094efcc8cd94297fd8177f3ae17f00e86e6e51044a"
-            axios.get(`https://api.trello.com/1/members/me/?key=${key}&token=${token}`)
-            .then((response) => {
-                const idBoards = response.data.idBoards;
-                idBoards.forEach((id : string) => {
-                    axios.get(`https://api.trello.com/1/board/${id}/?key=${key}&token=${token}`)
-                    .then((response) => {
-                      this.boards.ids.push(id)
-                      this.boards.names.push(response.data.name)
-                    })
-                    
-                    
-                })
-                
-            })
-            
-        },
-        foo(){
-          window.alert(this.boards.ids); window.alert(this.boards.names)
-        }
-    
   },
 });
 </script>

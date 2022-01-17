@@ -8,7 +8,7 @@
                 <v-list height="500"
                 class="overflow-y-auto">
                     <v-list v-for="(name, i) in cards.names" :key="i">
-                        <TrelloCard :cardName=name />
+                        <TrelloCard :cardName=name :cardID="cards.ids[i]"/>
                     </v-list>
                 </v-list>
             </v-col>
